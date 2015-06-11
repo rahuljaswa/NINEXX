@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Comment" representedClassName="RJManagedObjectComment" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="comments" inverseEntity="User" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="comments" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <entity name="Flag" representedClassName="RJManagedObjectFlag" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reason" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="flags" inverseEntity="User" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="flags" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <entity name="Image" representedClassName="RJManagedObjectImage" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostCategory" inverseName="image" inverseEntity="PostCategory" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="images" inverseEntity="Post" syncable="YES"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="image" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Like" representedClassName="RJManagedObjectLike" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="likes" inverseEntity="User" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="likes" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName="RJManagedObjectMessage" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="readReceipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="readMessages" inverseEntity="User" syncable="YES"/>
+        <relationship name="sender" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="thread" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thread" inverseName="messages" inverseEntity="Thread" syncable="YES"/>
+        <relationship name="threadWhereLastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Thread" inverseName="lastMessage" inverseEntity="Thread" syncable="YES"/>
+    </entity>
+    <entity name="Post" representedClassName="RJManagedObjectPost" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="forSale" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="longDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostCategory" inverseName="posts" inverseEntity="PostCategory" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="post" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="creator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="posts" inverseEntity="User" syncable="YES"/>
+        <relationship name="flags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flag" inverseName="post" inverseEntity="Flag" syncable="YES"/>
+        <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="posts" inverseEntity="Image" syncable="YES"/>
+        <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Like" inverseName="post" inverseEntity="Like" syncable="YES"/>
+        <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Thread" inverseName="post" inverseEntity="Thread" syncable="YES"/>
+    </entity>
+    <entity name="PostCategory" representedClassName="RJManagedObjectPostCategory" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="followingCategories" inverseEntity="User" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="categories" inverseEntity="Image" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="categories" inverseEntity="Post" syncable="YES"/>
+    </entity>
+    <entity name="Thread" representedClassName="RJManagedObjectThread" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="contacter" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
+        <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Message" inverseName="threadWhereLastMessage" inverseEntity="Message" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="thread" inverseEntity="Message" syncable="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="threads" inverseEntity="Post" syncable="YES"/>
+        <relationship name="readReceipts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="readThreads" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="RJManagedObjectUser" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="currentUser" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="blockedUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="blockedUsers" inverseEntity="User" syncable="YES"/>
+        <relationship name="comments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="creator" inverseEntity="Comment" syncable="YES"/>
+        <relationship name="flags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Flag" inverseName="creator" inverseEntity="Flag" syncable="YES"/>
+        <relationship name="followers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="followingUsers" inverseEntity="User" syncable="YES"/>
+        <relationship name="followingCategories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostCategory" inverseName="followers" inverseEntity="PostCategory" syncable="YES"/>
+        <relationship name="followingUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="followers" inverseEntity="User" syncable="YES"/>
+        <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="users" inverseEntity="Image" syncable="YES"/>
+        <relationship name="likes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Like" inverseName="creator" inverseEntity="Like" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="sender" inverseEntity="Message" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="creator" inverseEntity="Post" syncable="YES"/>
+        <relationship name="readMessages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="readReceipts" inverseEntity="Message" syncable="YES"/>
+        <relationship name="readThreads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Thread" inverseName="readReceipts" inverseEntity="Thread" syncable="YES"/>
+        <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Thread" inverseName="contacter" inverseEntity="Thread" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Comment" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Flag" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Image" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="Like" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="Message" positionX="27" positionY="144" width="128" height="148"/>
+        <element name="Post" positionX="0" positionY="0" width="128" height="225"/>
+        <element name="PostCategory" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Thread" positionX="45" positionY="153" width="128" height="163"/>
+        <element name="User" positionX="0" positionY="0" width="128" height="298"/>
+    </elements>
+</model>
